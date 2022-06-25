@@ -1,0 +1,4 @@
+You: What have you been up to?
+Friend: Watching old movies.
+You: USER_INPUT
+Friend:

@@ -1,0 +1,8 @@
+```
+A list of available commands:
+!99                     - Return a random Brooklyn 99 Quote.
+!ALAN                   - Return a random Alan Quote.
+!HELP <question>        - Use Open AI to answer a question. 
+!MARV <question/text>   - Supposedly sarcastic responses.
+!TEXT <question>        - Use Open AI to have a conversation. 
+```
