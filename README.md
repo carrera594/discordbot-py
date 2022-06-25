@@ -3,5 +3,5 @@ Install requirements:
 - `pip install -r requirements.txt`
 
 Copy .env file
-- cp .env-template .env
+- `cp .env-template .env`
 
