@@ -28,6 +28,20 @@ async def on_message(message):
         response = cmd.get_list_commands()
         await message.channel.send(response)
 
+    if '!MEME' in str(message.content)[0:5]:
+        
+        cmd_sub = str(message.content).split(" ")
+        
+        if len(cmd_sub)==2:
+            response = (cmd.get_meme(cmd_sub[1])).split('|')
+        elif len(cmd_sub)==3:
+            response = (cmd.get_meme(cmd_sub[1],cmd_sub[2])).split('|')      
+        else:
+            response = (cmd.get_meme()).split('|')
+        
+        await message.channel.send(response[0] + "\n" + response[1])
+    
+
     if "!HELP" in message.content:
         response = cmd.answer_question(str(message.content).replace("!HELP ",""))
         await message.channel.send(response) 

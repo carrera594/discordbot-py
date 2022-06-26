@@ -1,3 +1,4 @@
+from pickle import TRUE
 import random
 import os
 from warnings import catch_warnings
@@ -6,6 +7,9 @@ import os
 import file_handler
 import random
 import sys
+import praw 
+import configparser
+
 
 ROOT_DIR = os.path.dirname(os.path.abspath(__file__))
 fh = file_handler.fileHandler()
@@ -73,4 +77,54 @@ class command_handler:
 
     def sarcasm_response(self, msg):
         uprompt = (fh.load_file_str(f"{ROOT_DIR}{path}DATA{path}SarcasmPrompt.txt")).replace("USER_INPUT",msg)
-        return self.open_ai("text-davinci-002",uprompt,0.9,60,0.3,0.5,0.0,"MARV")    
+        return self.open_ai("text-davinci-002",uprompt,0.9,60,0.3,0.5,0.0,"MARV")
+    
+    
+    def get_meme(self, subreddit="dankmemes", limit=20):
+        
+        reddit_limit = int(os.getenv("reddit_limit"))
+        limit = int(limit)
+        
+        if(limit<0):
+            return "Limit cannot be less than 0!|"
+        elif(limit>=reddit_limit):
+            return f"Limit cannot exceed {limit}.|"
+        
+        
+        client_id = os.getenv('client_id')
+        client_secret=os.getenv('client_secret')
+        praw_password=os.getenv('praw_password')
+        username=os.getenv('praw_username')
+
+        try:
+            reddit = praw.Reddit(
+                                    client_id=client_id,
+                                    client_secret=client_secret, 
+                                    password=praw_password,
+                                    user_agent='bot1', 
+                                    username=username
+                                )
+            subreddit = reddit.subreddit(subreddit)
+            
+            images = {}
+            i = 0
+            #Download Images from Reddit
+            for submission in subreddit.hot(limit=int(limit)):
+                titleOfSubmission = submission.title
+                isStickied = submission.stickied
+                fullURL = submission.url
+                isNSFW = submission.over_18
+                
+                if( not isStickied ):
+                    images[i] = {   
+                                    "Title":titleOfSubmission,
+                                    "URL":fullURL,
+                                    "isNSFW":isNSFW
+                                }
+                    i=i+1
+                    #print(fullURL)
+
+            rand = random.randint(0,20)
+            return images[rand]["Title"] + "|" + images[rand]["URL"]
+        except:
+            return "Subreddit not found.|"

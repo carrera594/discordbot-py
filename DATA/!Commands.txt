@@ -4,5 +4,7 @@ A list of available commands:
 !ALAN                   - Return a random Alan Quote.
 !HELP <question>        - Use Open AI to answer a question. 
 !MARV <question/text>   - Supposedly sarcastic responses.
+!MEME <opt:subreddit>   - Gets a meme from reddit. 
+                          Optional Subreddit.
 !TEXT <question>        - Use Open AI to have a conversation. 
 ```
