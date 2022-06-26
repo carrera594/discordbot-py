@@ -41,6 +41,21 @@ async def on_message(message):
         
         await message.channel.send(response[0] + "\n" + response[1])
     
+    if "!JIRA" in message.content:
+        
+        args = str(message.content).replace("!JIRA ","").split(" ")
+        cmd = args[0]
+        body = args[1]
+        
+        import jira_handler
+        jira = jira_handler.jira_handler()
+        
+        response = jira.cmd_handler(cmd,body)
+        
+        
+        #response = #cmd.answer_question(str(message.content).replace("!HELP ",""))
+        await message.channel.send(response) 
+
 
     if "!HELP" in message.content:
         response = cmd.answer_question(str(message.content).replace("!HELP ",""))
