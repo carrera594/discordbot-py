@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 from command_handler import command_handler
 
 load_dotenv()
-TOKEN = os.getenv('DISCORD_TOKEN_DEV')
+TOKEN = os.getenv('DISCORD_TOKEN')
 
 
 client = discord.Client()
@@ -44,13 +44,13 @@ async def on_message(message):
     if "!JIRA" in message.content:
         
         args = str(message.content).replace("!JIRA ","").split(" ")
-        cmd = args[0]
+        cmd_1 = args[0]
         body = args[1]
         
         import jira_handler
         jira = jira_handler.jira_handler()
         
-        response = jira.cmd_handler(cmd,body)
+        response = jira.cmd_handler(cmd_1,body)
         
         
         #response = #cmd.answer_question(str(message.content).replace("!HELP ",""))
