@@ -19,10 +19,9 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-
-
     if message.author == client.user:
       return
+    message.content  = str(message.content).upper()
 
     if message.content == '!COMMANDS':
         response = cmd.get_list_commands()
@@ -52,8 +51,6 @@ async def on_message(message):
         
         response = jira.cmd_handler(cmd_1,body)
         
-        
-        #response = #cmd.answer_question(str(message.content).replace("!HELP ",""))
         await message.channel.send(response) 
 
 
