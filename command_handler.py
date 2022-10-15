@@ -6,8 +6,8 @@ import openai
 import os
 import file_handler
 import random
-import sys
-import praw 
+import sys 
+import asyncpraw
 import configparser
 
 
@@ -80,7 +80,7 @@ class command_handler:
         return self.open_ai("text-davinci-002",uprompt,0.9,60,0.3,0.5,0.0,"MARV")
     
     
-    def get_meme(self, subreddit="dankmemes", limit=20):
+    async def get_meme(self, subreddit="dankmemes", limit=20):
         
         reddit_limit = int(os.getenv("reddit_limit"))
         limit = int(limit)
@@ -97,19 +97,21 @@ class command_handler:
         username=os.getenv('praw_username')
 
         try:
-            reddit = praw.Reddit(
+            reddit = asyncpraw.Reddit(
                                     client_id=client_id,
                                     client_secret=client_secret, 
                                     password=praw_password,
                                     user_agent='bot1', 
                                     username=username
                                 )
-            subreddit = reddit.subreddit(subreddit)
+            
+
+            subreddit = await reddit.subreddit(subreddit)
             
             images = {}
             i = 0
             #Download Images from Reddit
-            for submission in subreddit.hot(limit=int(limit)):
+            async for submission in subreddit.hot(limit=int(limit)):
                 titleOfSubmission = submission.title
                 isStickied = submission.stickied
                 fullURL = submission.url

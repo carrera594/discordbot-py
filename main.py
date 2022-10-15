@@ -32,11 +32,11 @@ async def on_message(message):
         cmd_sub = str(message.content).split(" ")
         
         if len(cmd_sub)==2:
-            response = (cmd.get_meme(cmd_sub[1])).split('|')
+            response = (await cmd.get_meme(cmd_sub[1])).split('|')
         elif len(cmd_sub)==3:
-            response = (cmd.get_meme(cmd_sub[1],cmd_sub[2])).split('|')      
+            response = (await cmd.get_meme(cmd_sub[1],cmd_sub[2])).split('|')      
         else:
-            response = (cmd.get_meme()).split('|')
+            response =  (await cmd.get_meme()).split('|')
         
         await message.channel.send(response[0] + "\n" + response[1])
     
